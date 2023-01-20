@@ -29,8 +29,9 @@ jobs:
       
       - name: Set old_version
         id: old_version
-        run: ansible-galaxy collection list hypersql_devops.postgres | grep hypersql_devops.postgres | awk '{print $2}'
-
+        run: |
+          echo ::set-env name=OLD_VERSION::$(ansible-galaxy collection list hypersql_devops.postgres | grep hypersql_devops.postgres | awk '{print $2}')
+          
       - name: Set new_version
         id: new_version
         uses: pCYSl5EDgo/cat@master
@@ -41,7 +42,7 @@ jobs:
         uses: jackbilestech/semver-compare@1.0.4
         with:
           head: ${{ steps.new_version.outputs.text }}
-          base: ${{ steps.old_version.outputs }}
+          base: ${{ env.OLD_VERSION }}
           operator: '>'
 
       - name: Build
