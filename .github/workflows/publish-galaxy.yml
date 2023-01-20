@@ -30,7 +30,7 @@ jobs:
       - name: Set old_version
         id: old_version
         run: |
-          echo ::set-env name=OLD_VERSION::$(ansible-galaxy collection list hypersql_devops.postgres | grep hypersql_devops.postgres | awk '{print $2}')
+          echo "OLD_VERSION=$(ansible-galaxy collection list hypersql_devops.postgres | grep hypersql_devops.postgres | awk '{print $2}')" >> $GITHUB_OUTPUT
           
       - name: Set new_version
         id: new_version
@@ -42,7 +42,7 @@ jobs:
         uses: jackbilestech/semver-compare@1.0.4
         with:
           head: ${{ steps.new_version.outputs.text }}
-          base: ${{ env.OLD_VERSION }}
+          base: ${{ steps.old_version.outputs.OLD_VERSION }}
           operator: '>'
 
       - name: Build
