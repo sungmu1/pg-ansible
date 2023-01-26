@@ -20,6 +20,8 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           title: "Pull Request to Main"
+          body: >
+            This pull request is automated github action
           token: ${{ secrets.GIT_ACCESS_TOKEN }}
           commit-message: "Pull Request Message"
           branch: master
