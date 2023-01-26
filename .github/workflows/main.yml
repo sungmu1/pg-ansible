@@ -2,7 +2,10 @@ name: Main action
 
 on:                                                                              
   workflow_dispatch:                                         
-  pull_request:                                            
+  pull_request:
+    types: [closed]
+    paths:
+      - "VERSION"      
     branches:                                                                    
       - master
 
@@ -19,5 +22,5 @@ jobs:
           curl -XPOST -u "${{ secrets.ADMIN_USERNAME }}:${{ secrets.ADMIN_ACCESS_TOKEN }}" \
                -H "Accept: application/vnd.github.everest-preview+json" \
                -H "Content-Type: application/json" \
-               https://api.github.com/repos/hypersql/postgres-container-build/dispatches \
+               https://api.github.com/repos/sungmu1/postgres-container-build/dispatches \
                --data '{"event_type": "deploy-ansible-repository"}'
