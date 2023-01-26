@@ -1,0 +1,25 @@
+name: Develop branch action
+
+on:                                                                              
+  workflow_dispatch:                                                             
+  push:
+    paths:
+      - "VERSION"
+    branches:
+      - develop
+
+jobs:
+  pull_request_main:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Pull Request
+        uses: actions/create-pull-request@v2
+        with:
+          title: "Pull Request"
+          body: "Pull Request"
+          head: develop
+          base: main
