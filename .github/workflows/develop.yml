@@ -32,5 +32,4 @@ jobs:
           labels: |
             report
             automated pr
-          branch: develop
-          base: master
+          branch: master
