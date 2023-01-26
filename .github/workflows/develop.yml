@@ -22,4 +22,4 @@ jobs:
           title: "Pull Request to Main"
           token: ${{ secrets.GIT_ACCESS_TOKEN }}
           commit-message: "Pull Request Message"
-          branch: main
+          branch: master
