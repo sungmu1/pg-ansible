@@ -2,9 +2,7 @@ name: Main action
 
 on:                                                                              
   workflow_dispatch:                                         
-  pull_request:
-    paths:
-      - "VERSION"                                                              
+  pull_request:                                            
     branches:                                                                    
       - master
 
