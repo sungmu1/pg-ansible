@@ -20,8 +20,16 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           title: "Pull Request to Main"
-          body: >
-            This pull request is automated github action
           token: ${{ secrets.GIT_ACCESS_TOKEN }}
+          body: >
+            This pull request is automated github action by 
+            [create-pull-request](https://github.com/peter-evans/create-pull-request).
+          committer: GitHub <sungmu1@github.com>
+          signoff: false
           commit-message: "Pull Request Message"
+          assignees: sungmu1
+          reviewers: sungmu1
+          labels: |
+            report
+            automated pr
           branch: master
