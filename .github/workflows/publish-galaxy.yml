@@ -48,7 +48,8 @@ jobs:
       - name: Build
         run: make build
 
-      #- name: publish hypersql devops galaxy
+      - name: publish hypersql devops galaxy
+        run: echo /home/runner/work/pg-ansible/pg-ansible/dist/hypersql_devops-postgres-${{ steps.new_version.outputs.text }}.tar.gz
       #  uses: ansible/ansible-publish-action@v1.0.0
       #  with:
       #    api_key: ${{ secrets.galaxy_api_key }}
