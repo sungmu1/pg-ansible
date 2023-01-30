@@ -6,7 +6,7 @@ on:
     paths:
       - "VERSION"                                                              
     branches:                                                                    
-      - 11
+      - master
 
 jobs:
   merge-pull-request:
