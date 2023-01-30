@@ -13,18 +13,30 @@ jobs:
   merge-pull-request:
     runs-on: ubuntu-latest
     steps:
-      - uses: plm9606/automerge_actions@1.2.2
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Automatically merge
+        uses: actions/github-script@0.10.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
         with:
-          github-token: ${{ secrets.GIT_ACCESS_TOKEN }}
-          label-name: automerge
-          merge-method: squash
-  #close-pull-request:
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - uses: superbrothers/close-pull-request@v3
-  #      with:
-  #        comment: "Close Pull Request"
-  #        github_token: ${{ secrets.GIT_ACCESS_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            if (pr.state !== 'open') {
+              return;
+            }
+
+            const octokit = new GitHub(context.token);
+            await octokit.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number
+            });
+      - name: close-pull-request
+        uses: superbrothers/close-pull-request@v3
+        with:
+          comment: "Close Pull Request"
+          github_token: ${{ secrets.GIT_ACCESS_TOKEN }}
   publish-galaxy:
     needs: merge-pull-request
     uses: ./.github/workflows/publish-galaxy.yml
