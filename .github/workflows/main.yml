@@ -16,22 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Automatically merge
-        uses: actions/github-script@v6
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
-        with:
-          script: |
-            const pr = context.payload.pull_request;
-            if (pr.state !== 'open') {
-              return;
-            }
-
-            const octokit = new GitHub(context.token);
-            await octokit.pulls.merge({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: pr.number
-            });
+        uses: KeisukeYamashita/auto-pull-request-merge@v1
       - name: close-pull-request
         uses: superbrothers/close-pull-request@v3
         with:
