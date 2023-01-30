@@ -2,27 +2,34 @@ name: Main action
 
 on:                                                                              
   workflow_dispatch:                                        
-  pull_request_target:
+  pull_request:
     paths:
       - "VERSION"                                                              
     branches:                                                                    
       - 11
 
 jobs:
-  close-pull-request:
+  merge-pull-request:
     runs-on: ubuntu-latest
     steps:
-      - uses: superbrothers/close-pull-request@v3
+      - uses: plm9606/automerge_actions@1.2.2
         with:
-          comment: "Close Pull Request"
-          github_token: ${{ secrets.GIT_ACCESS_TOKEN }}
+          github-token: ${{ secrets.GIT_ACCESS_TOKEN }}
+          label-name: automerge
+  #close-pull-request:
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - uses: superbrothers/close-pull-request@v3
+  #      with:
+  #        comment: "Close Pull Request"
+  #        github_token: ${{ secrets.GIT_ACCESS_TOKEN }}
   publish-galaxy:
-    needs: close-pull-request
+    needs: merge-pull-request
     uses: ./.github/workflows/publish-galaxy.yml
     secrets:
       galaxy_api_key: ${{ secrets.GALAXY_API_KEY }}
   trigger-gh-page-deploy:
-    needs: [publish-galaxy, close-pull-request]
+    needs: [publish-galaxy, merge-pull-request]
     runs-on: ubuntu-latest
     steps: 
       - run: |
