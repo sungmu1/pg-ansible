@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: plm9606/automerge_actions@1.2.2
         with:
-          github_token: ${{ secrets.GIT_ACCESS_TOKEN }}
+          github-token: ${{ secrets.GIT_ACCESS_TOKEN }}
   #close-pull-request:
   #  runs-on: ubuntu-latest
   #  steps:
