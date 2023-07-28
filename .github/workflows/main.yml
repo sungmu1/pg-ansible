@@ -1,7 +1,10 @@
 name: Main action
 
 on:                                                                              
-  workflow_dispatch:                                        
+  workflow_dispatch:
+  repository_dispatch:
+    types:
+      - deploy-ansible-repository
   pull_request_target:
     types: [opened]
     paths:
